@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=db'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=user'
+    volumes:
+      - ./local-dev:/docker-entrypoint-initdb.d:ro
+    ports:
+      - 5432:5432
+
+  app:
+    image: app:latest
+    build: ./
+    develop:
+      watch:
+        - action: rebuild
+          path: deploy.watch
+        - action: sync
+          path: src/main/resources/templates/
+          target: /usr/local/tomcat/webapps/app-for-compose-watch-0.0.1-SNAPSHOT/WEB-INF/classes/templates/
+    ports:
+      - 8080:8080
