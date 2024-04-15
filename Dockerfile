@@ -27,7 +27,4 @@ FROM tomcat:11.0.0-jre21 as run
 
 EXPOSE 8080
 
-#COPY --from=build /app/web/target/thepusher-*/WEB-INF/classes/hibernate.cfg.xml /srv/thepusher/conf/
-#COPY --from=build /app/web/target/thepusher-*/WEB-INF/classes/application.properties /srv/thepusher/conf/
-
 COPY --from=build /app/target/app-for-compose-watch-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/
